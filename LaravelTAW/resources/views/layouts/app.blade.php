@@ -246,5 +246,16 @@
     <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>
+    <style>
+      .user-pp {
+          display: inline-block !important;
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover !important;
+          display: block !important;
+          margin: 0 auto !important;
+        }
+    </style>
   </body>
 </html>

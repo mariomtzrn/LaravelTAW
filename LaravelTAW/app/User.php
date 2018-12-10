@@ -29,18 +29,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    #Funcion para obtener los proyectos del usuario
     public function projects(){
       return $this->hasMany(Project::class, 'owner_id');
     }
   
+    #Funcion para obtener las propuestas del usuario
     public function propuestas(){
       return $this->hasMany(Propuesta::class, 'id_user');
     }
   
+    #Funcion para obtener las calificaciones del usuario
     public function calificaciones(){
       return $this->hasMany(Calification::class, 'id_user_calificado');
     }
   
+    #Funcion para obtener los proyectos calificados del usuario
     public function projects_done(){
       return $this->hasMany(Calification::class, 'id_user_calificado');
     }

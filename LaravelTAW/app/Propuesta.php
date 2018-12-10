@@ -10,10 +10,12 @@ class Propuesta extends Model
       'id_user', 'id_project', 'descripcion', 'tiempo', 'estado'
   ];
   
+  #Funcion para obtener el proyecto de la propuesta
   public function get_project($id){
     return Project::where('id', $id)->first();
   }
   
+  #Funcion para obtener la informacion del usuario dueño de la propuesta
   public function owner($id_user){
     return User::where('id', $id_user)->first();
   }

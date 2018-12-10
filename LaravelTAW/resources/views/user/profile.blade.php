@@ -190,7 +190,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" width="100%" height="100%" src="{{ asset('storage/profile_pictures/' . $user->foto_perfil) }}" alt="User profile picture">
+              <img class="profile-user-img center user-pp" src="{{ asset('storage/profile_pictures/' . $user->foto_perfil) }}" alt="User profile picture">
 
               <h3 class="profile-username text-center">{{ $user->nombre . ' ' . $user->apellido }}</h3>
               <p class="text-muted text-center">
@@ -433,5 +433,16 @@
     <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>
+    <style>
+      .user-pp {
+          display: inline-block !important;
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover !important;
+          display: block !important;
+          margin: 0 auto !important;
+        }
+    </style>
   </body>
 </html>

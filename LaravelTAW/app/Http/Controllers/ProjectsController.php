@@ -108,6 +108,11 @@ class ProjectsController extends Controller
         return redirect('/projects');
     }
 
+    /**
+     * Valida los campos del form para crear o editar un proyecto
+     *
+     * @return void
+     */
     protected function validateProject()
     {
       return $campos = request()->validate([
@@ -119,6 +124,11 @@ class ProjectsController extends Controller
       ]);
     }
   
+    /**
+     * Valida los campos del form para crear o editar una propuesta
+     *
+     * @return void
+     */
     protected function validatePropuesta(){
       return $campos = request()->validate([
         'descripcion'=>['required', 'min:15', 'max:255'],
@@ -127,18 +137,36 @@ class ProjectsController extends Controller
       ]);
     }
 
+    /**
+     * Muestra una vista con los proyectos disponibles
+     * Solo muestra los proyectos que no son del usuario en sesion
+     *
+     * @return void
+     */
     public function search()
     {
         $projects = Project::all()->where('owner_id', '!=', auth()->id());
         return view('projects.search', compact('projects'));
     }
 
+    /**
+     * Muestra una vista para crear una nueva propuesta
+     *
+     * @param  \App\Project  $project
+     * @return \Illuminate\Http\Response
+     */
     public function create_prop($id)
     {
         $project = Project::where('id', $id)->first();
         return view('projects.create_prop', compact('project'));
     }
   
+    /**
+     * Almacena la propuesta creada
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function create_prop_store(Request $request){
         $campos = $this->validatePropuesta();
         $campos['id_user'] = auth()->id();
@@ -146,24 +174,40 @@ class ProjectsController extends Controller
         return redirect('/search_projects');
     }
   
+    /**
+     * Almacena la edicion de la propuesta
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function create_prop_update(Request $request){
         $campos = $this->validatePropuesta();
         Propuesta::where('id', $request['id_prop'])->update($campos);
         return redirect('/search_projects');
     }
   
+    /**
+     * Edita el estado de la propuesta que se va a aceptar
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function acept_prop(Request $request){
         $campos = request()->validate([
-          'id_project'=>['required'],
-          'estado'=>['required']
+          'id_project'=>['required']
         ]);
-        if($request['estado'] == 0){
-          $campos['estado'] = 1;
-        }
+        $campos['estado'] = 1;
         Propuesta::where('id', $request['id_prop'])->update($campos);
         return redirect('/projects/' . $request['id_project']);
     }
   
+    /**
+     * Edita el estado del proyecto y propuesta, ademas de crear una nueva relacion de calificacion
+     * entre los usuarios relacionados
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function end_project(Request $request){
         $campos_act_proj = ['estado'=>1];
         $campos_calif = request()->validate([
@@ -180,8 +224,13 @@ class ProjectsController extends Controller
         return redirect('/projects/' . $request['id_project']);
     }
     
+    /**
+     * Edita el estado de la propuesta, una vez que se marca el proyecto como terminado
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function end_prop($fields){
-        $campos = ['estado'=>2];
-        Propuesta::where('id', $fields['id_prop'])->update($campos);
+        Propuesta::where('id', $fields['id_prop'])->update(['estado'=>2]);
     }
 }

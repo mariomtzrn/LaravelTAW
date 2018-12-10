@@ -16,7 +16,7 @@ Freelancers
         <h5 class="widget-user-desc">Freelancer</h5>
       </div>
       <div class="widget-user-image">
-        <img class="img-circle" src="{{ asset('storage/profile_pictures/' . $user->foto_perfil) }}" alt="User Avatar">
+        <img class="img-circle user-pp" src="{{ asset('storage/profile_pictures/' . $user->foto_perfil) }}" alt="User Avatar">
       </div>
       <div class="box-footer">
         <div class="row">
@@ -58,4 +58,21 @@ Freelancers
   </div>
 @endforeach
 </div>
+<style>
+  .widget-user .widget-user-image {
+      position: absolute;
+      top: 65px;
+      left: 50%;
+      margin-left: -45px;
+  }
+  .user-pp {
+      display: inline-block !important;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+</style>
 @endsection
